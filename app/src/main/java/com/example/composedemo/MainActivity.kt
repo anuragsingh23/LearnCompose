@@ -14,8 +14,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -31,7 +36,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            UserList()
+
         }
     }
 }
@@ -40,20 +45,34 @@ class MainActivity : ComponentActivity() {
 data class Users(
     val id : Int
 )
-val user = listOf(
-    Users(1),
-    Users(1),
-    Users(1),
-    Users(1),
-    Users(1),
-    Users(1),
-    Users(1),
-    Users(1),
-)
+
+@Composable
+fun MainContent(){
+    val user = Users(1)
+    val users = remember{
+        mutableStateListOf(user)
+    }
+    Box{
+        UserList(user = users )
+        Button(modifier =
+        Modifier.
+        padding(24.dp).
+        align(Alignment.BottomCenter),
+            onClick = {
+                users.add(Users(1))
+        })
+        {
+            Text(text = "add More")
+        }
+    }
+}
 
 @Composable
 fun UserList(
+    user :List<Users>
 ){
+
+
     LazyColumn{
         items(user){
             user ->
@@ -78,8 +97,7 @@ fun UserCard(){
     ) {
         Row (
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
+                .fillMaxSize()
                 .padding(12.dp)
                 .padding(12.dp)
 
@@ -94,7 +112,7 @@ fun UserCard(){
             )
             Column() {
                 Text(text = stringResource(id = R.string.app_name))
-                Button(onClick = {
+                Button( onClick = {
                     //Button action
                 }) {
                     Text(text = "View Profile")
@@ -109,5 +127,8 @@ fun UserCard(){
 @Preview(showBackground = true)
 @Composable
 fun UserCAseCard(){
-        UserCard()
+       Surface() {
+             Modifier.fillMaxSize()
+
+       }
 }
