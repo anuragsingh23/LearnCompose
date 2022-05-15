@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
+            MainContent()
         }
     }
 }
@@ -52,12 +52,14 @@ fun MainContent(){
     val users = remember{
         mutableStateListOf(user)
     }
-    Box{
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ){
         UserList(user = users )
         Button(modifier =
-        Modifier.
-        padding(24.dp).
-        align(Alignment.BottomCenter),
+        Modifier
+            .padding(24.dp)
+            .align(Alignment.BottomCenter),
             onClick = {
                 users.add(Users(1))
         })
